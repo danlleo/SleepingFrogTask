@@ -1,5 +1,4 @@
 ﻿using Input;
-using Misc;
 using Zenject;
 
 namespace Infrastructure
@@ -14,8 +13,7 @@ namespace Infrastructure
         private void BindInputManager()
         {
             Container
-                .Bind<IInput>()
-                .To<DesktopInput>()
+                .BindInterfacesTo<DesktopInput>()
                 .AsSingle()
                 .NonLazy();
         }
