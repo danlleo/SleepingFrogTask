@@ -4,7 +4,7 @@ using UnityEngine;
 using Wave;
 using Zenject;
 
-namespace Infrastructure
+namespace Installers
 {
     public class LevelBuilderInstaller : MonoInstaller
     {

@@ -1,23 +1,31 @@
 ﻿using System;
 using Characters.Common;
+using Characters.Player;
 using Sound;
 using UnityEngine;
 
 namespace Characters.Enemy
 {
-    [RequireComponent(typeof(Enemy))]
     public class EnemyHealth : Health
     {
-        public static event Action OnEnemyDefeated;
+        public static event Action OnAnyEnemyDefeated;
         public event Action OnReceivedDamage;
         public override int InitialHealth { get; protected set; }
 
         [Header("External references")] 
         [SerializeField] private AudioClip _deathAudioClip;
-        
-        private Enemy _enemy;
 
-        public void InitializeHealth(int healthAmount)
+        private void OnEnable()
+        {
+            PlayerHealth.OnAnyPlayerDied += PlayerHealth_OnAnyPlayerDied;
+        }
+
+        private void OnDisable()
+        {
+            PlayerHealth.OnAnyPlayerDied -= PlayerHealth_OnAnyPlayerDied;
+        }
+
+        public void Initialize(int healthAmount)
         {
             InitialHealth = healthAmount;
             CurrentHealthAmount = InitialHealth;
@@ -31,7 +39,12 @@ namespace Characters.Enemy
         protected override void OnDied()
         {
             SoundFXManager.Instance.PlaySoundFX2DClip(_deathAudioClip, .4f);
-            OnEnemyDefeated?.Invoke();
+            OnAnyEnemyDefeated?.Invoke();
+            Destroy(gameObject);
+        }
+        
+        private void PlayerHealth_OnAnyPlayerDied()
+        {
             Destroy(gameObject);
         }
     }

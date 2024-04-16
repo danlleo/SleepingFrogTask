@@ -49,7 +49,7 @@ namespace Characters.Enemy.StateMachine.ConcreteStates
         {
             while (true)
             {
-                _enemy.EnemyMelee.Attack();
+                _enemy.Melee.Attack();
                 yield return new WaitForSeconds(DelayTimeBeforeNextAttack);
             }
         }

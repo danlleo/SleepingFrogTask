@@ -31,14 +31,14 @@ namespace UI
         private void OnEnable()
         {
             _player.Health.OnReceivedDamage += Player_OnReceivedDamage;
-            EnemyHealth.OnEnemyDefeated += EnemyHealth_OnAnyEnemyDefeated;
+            EnemyHealth.OnAnyEnemyDefeated += EnemyHealth_OnAnyEnemyDefeated;
             WaveManager.OnAnyWaveSpawned += WaveManager_OnAnyWaveSpawned;
         }
 
         private void OnDisable()
         {
             _player.Health.OnReceivedDamage -= Player_OnReceivedDamage;
-            EnemyHealth.OnEnemyDefeated -= EnemyHealth_OnAnyEnemyDefeated;
+            EnemyHealth.OnAnyEnemyDefeated -= EnemyHealth_OnAnyEnemyDefeated;
             WaveManager.OnAnyWaveSpawned -= WaveManager_OnAnyWaveSpawned;
         }
 

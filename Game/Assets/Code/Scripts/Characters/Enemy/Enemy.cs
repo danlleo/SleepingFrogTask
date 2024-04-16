@@ -1,6 +1,5 @@
 using Characters.Enemy.Events;
 using Characters.Enemy.StateMachine;
-using Characters.Player;
 using UnityEngine;
 using Zenject;
 
@@ -16,12 +15,8 @@ namespace Characters.Enemy
         public StateFactory StateFactory { get; private set; }
         public EnemyHealth Health { get; private set; }
         public EnemyLocomotion Locomotion { get; private set; }
-        public EnemyMelee EnemyMelee { get; private set; }
+        public EnemyMelee Melee { get; private set; }
         public EnemyEvents Events { get; private set; }
-        
-        public float MovingSpeed { get; private set; }
-        public int AttackDamage { get; private set; }
-        public int HealthAmount { get; private set; }
         
         [Header("External references")]
         [SerializeField] private SpriteRenderer _spriteRenderer; 
@@ -38,7 +33,7 @@ namespace Characters.Enemy
         {
             Health = GetComponent<EnemyHealth>();
             Locomotion = GetComponent<EnemyLocomotion>();
-            EnemyMelee = GetComponent<EnemyMelee>();
+            Melee = GetComponent<EnemyMelee>();
             
             Events = new EnemyEvents();
             _stateMachine = new StateMachine.StateMachine();
@@ -48,19 +43,18 @@ namespace Characters.Enemy
         private void OnEnable()
         {
             _stateMachine.CurrentState?.SubscribeToEvents();
-            PlayerHealth.OnAnyPlayerDied += PlayerHealth_OnAnyPlayerDied;
+            
         }
 
         private void OnDisable()
         {
             _stateMachine.CurrentState.UnsubscribeFromEvents();
-            PlayerHealth.OnAnyPlayerDied -= PlayerHealth_OnAnyPlayerDied;
+            
         }
 
         private void Start()
         {
             _stateMachine.Initialize(StateFactory.MovingToPlayer());
-            Health.InitializeHealth(HealthAmount);
         }
 
         private void Update()
@@ -73,16 +67,11 @@ namespace Characters.Enemy
             _stateMachine.CurrentState.OnExit();
         }
         
-        private void PlayerHealth_OnAnyPlayerDied()
-        {
-            Destroy(gameObject);
-        }
-
         public void Initialize(float movingSpeed, int attackDamage, int healthAmount, Color color)
         {
-            MovingSpeed = movingSpeed;
-            AttackDamage = attackDamage;
-            HealthAmount = healthAmount;
+            Locomotion.Initialize(movingSpeed);
+            Melee.Initialize(attackDamage);
+            Health.Initialize(healthAmount);
             _spriteRenderer.color = color;
         }
         

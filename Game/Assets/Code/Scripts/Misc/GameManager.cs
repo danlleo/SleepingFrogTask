@@ -6,7 +6,7 @@ using Zenject;
 namespace Misc
 {
     [DisallowMultipleComponent]
-    public class GameManager : MonoBehaviour
+    public sealed class GameManager : MonoBehaviour
     {
         private WaveManager _waveManager;
     

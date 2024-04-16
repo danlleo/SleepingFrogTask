@@ -9,16 +9,25 @@ namespace Characters.Enemy
     {
         private Enemy _enemy;
 
+        private int _attackDamage;
+
         private void Awake()
         {
             _enemy = GetComponent<Enemy>();
         }
 
+        public void Initialize(int attackDamage)
+        {
+            _attackDamage = attackDamage;
+        }
+        
         public void Attack()
         {
+            if (_enemy.Player == null) return;
+            
             if (_enemy.Player.TryGetComponent(out IDamagable damagable))
             {
-                damagable.Damage(_enemy.AttackDamage);
+                damagable.Damage(_attackDamage);
             }
         }
     }

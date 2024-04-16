@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace Wave
 {
-    public class WaveManager : IDisposable
+    public sealed class WaveManager : IDisposable
     {
         public static event Action OnAnyWaveSpawned;
         public static event Action OnAnyWaveCleared;
@@ -28,12 +28,12 @@ namespace Wave
             _waves = waves;
             _currentWave = _waves[_currentWaveIndex];
             
-            EnemyHealth.OnEnemyDefeated += EnemyHealth_OnAnyEnemyDefeated;
+            EnemyHealth.OnAnyEnemyDefeated += EnemyHealth_OnAnyEnemyDefeated;
         }
 
         public void Dispose()
         {
-            EnemyHealth.OnEnemyDefeated -= EnemyHealth_OnAnyEnemyDefeated;
+            EnemyHealth.OnAnyEnemyDefeated -= EnemyHealth_OnAnyEnemyDefeated;
         }
          
         public void SpawnWave(MonoBehaviour owner)

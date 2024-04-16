@@ -1,7 +1,7 @@
 ﻿using Input;
 using Zenject;
 
-namespace Infrastructure
+namespace Installers
 {
     public class GameEssentialsInstaller  : MonoInstaller
     {

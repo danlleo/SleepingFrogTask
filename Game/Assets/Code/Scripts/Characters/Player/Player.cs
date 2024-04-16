@@ -8,6 +8,7 @@ namespace Characters.Player
 {
     [RequireComponent(typeof(PlayerMelee))]
     [RequireComponent(typeof(PlayerLocomotion))]
+    [RequireComponent(typeof(PlayerHealth))]
     [DisallowMultipleComponent]
     public class Player : MonoBehaviour
     {
@@ -16,7 +17,7 @@ namespace Characters.Player
         public PlayerLocomotion PlayerLocomotion { get; private set; }
         public PlayerMelee PlayerMelee { get; private set; }
         public PlayerHealth Health { get; private set; }
-        public PlayerEvents Events;
+        public PlayerEvents Events { get; private set; }
         
         private StateMachine.StateMachine _stateMachine;
 

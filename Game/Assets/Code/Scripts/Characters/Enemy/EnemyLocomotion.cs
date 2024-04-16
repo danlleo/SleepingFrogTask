@@ -18,11 +18,18 @@ namespace Characters.Enemy
         private Coroutine _moveToPlayerRoutine;
         private Coroutine _knockbackRoutine;
 
+        private float _movingSpeed;
+        
         private void Awake()
         {
             _enemy = GetComponent<Enemy>();
         }
 
+        public void Initialize(float movingSpeed)
+        {
+            _movingSpeed = movingSpeed;
+        }
+        
         public void MoveToPlayer(Transform playerTransform, Action onReached)
         {
             if (playerTransform == null) return;
@@ -79,7 +86,7 @@ namespace Characters.Enemy
             {
                 transform.position = Vector3.MoveTowards(transform.position,
                     new Vector3(targetPosition.x, transform.position.y, transform.position.z),
-                    _enemy.MovingSpeed * Time.deltaTime);
+                    _movingSpeed * Time.deltaTime);
 
                 yield return null;
             }
